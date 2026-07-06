@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balamurugan — UI/UX Designer</title>
+<meta name="description" content="Balamurugan, UI/UX Designer in Chennai — research-driven interfaces, from field study to high-fidelity prototype.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,450;9..144,560;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:            #12170f;
+    --bg-panel:      #181e13;
+    --bg-panel-2:    #1e2518;
+    --line:          #313b28;
+    --sprout:        #9bc23f;
+    --sprout-dim:    #6d8c39;
+    --gold:          #e6b64d;
+    --text:          #f2f0e4;
+    --text-muted:    #a7ad97;
+    --text-faint:    #6c7362;
+
+    --display: 'Fraunces', serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+
+    --max: 1120px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; margin:0; padding:0; }
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  section{ position:relative; }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--sprout);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--sprout-dim);
+  }
+
+  h1,h2,h3{ font-family:var(--display); font-weight:560; margin:0; letter-spacing:-0.01em; }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(22px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(18,23,15,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:74px;
+  }
+  .brand{
+    font-family:var(--display);
+    font-size:20px;
+    font-weight:650;
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand .mark{
+    width:34px; height:34px; border-radius:8px;
+    background:linear-gradient(160deg, var(--sprout), var(--sprout-dim));
+    color:#0f1409;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-weight:700; font-size:14px;
+  }
+  .navlinks{ display:flex; gap:34px; }
+  .navlinks a{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--text-muted);
+    letter-spacing:.03em;
+    position:relative;
+    padding:4px 0;
+    transition:color .25s ease;
+  }
+  .navlinks a:hover, .navlinks a:focus-visible{ color:var(--text); outline:none; }
+  .navlinks a::after{
+    content:"";
+    position:absolute; left:0; bottom:-2px;
+    width:0; height:1px; background:var(--sprout);
+    transition:width .25s ease;
+  }
+  .navlinks a:hover::after{ width:100%; }
+
+  .navtoggle{
+    display:none;
+    background:none; border:1px solid var(--line); border-radius:8px;
+    width:40px; height:40px; color:var(--text);
+    align-items:center; justify-content:center; cursor:pointer;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:168px 0 120px;
+    position:relative;
+    overflow:hidden;
+  }
+  .furrows{
+    position:absolute; inset:0; z-index:0;
+    opacity:.5;
+    pointer-events:none;
+  }
+  .hero .wrap{ position:relative; z-index:1; }
+
+  .hero-eyebrow{
+    font-family:var(--mono);
+    font-size:13px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:22px;
+  }
+
+  .hero h1{
+    font-size:clamp(46px, 8vw, 92px);
+    line-height:0.98;
+    color:var(--text);
+  }
+  .hero h1 span{
+    display:block;
+    color:var(--sprout);
+    font-style:italic;
+    font-weight:450;
+  }
+
+  .hero-role{
+    margin-top:26px;
+    font-family:var(--mono);
+    font-size:15px;
+    color:var(--text-muted);
+    display:flex; align-items:center; gap:12px;
+    flex-wrap:wrap;
+  }
+  .hero-role .dot{ width:6px; height:6px; border-radius:50%; background:var(--sprout); }
+
+  .hero-tagline{
+    margin-top:28px;
+    max-width:560px;
+    font-size:18px;
+    color:var(--text-muted);
+  }
+
+  .cta-row{
+    margin-top:44px;
+    display:flex; gap:16px; flex-wrap:wrap;
+  }
+  .btn{
+    font-family:var(--mono);
+    font-size:13.5px;
+    letter-spacing:.03em;
+    padding:14px 26px;
+    border-radius:9px;
+    cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .25s ease, background .25s ease, border-color .25s ease;
+    border:1px solid transparent;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{ background:var(--sprout); color:#101508; }
+  .btn-primary:hover{ background:#a9d156; }
+  .btn-ghost{ border-color:var(--line); color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--sprout-dim); }
+
+  .scroll-cue{
+    margin-top:90px;
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:11.5px; color:var(--text-faint);
+    letter-spacing:.1em; text-transform:uppercase;
+  }
+  .scroll-cue .line{
+    width:1px; height:34px; background:linear-gradient(var(--sprout), transparent);
+    animation:pulse-line 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse-line{ 0%,100%{opacity:.4;} 50%{opacity:1;} }
+
+  /* ---------- SECTION HEADS ---------- */
+  .section-head{ max-width:640px; margin-bottom:64px; }
+  .section-head h2{ font-size:clamp(30px,4vw,42px); color:var(--text); }
+  .section-head p{ margin-top:16px; color:var(--text-muted); font-size:16px; }
+
+  section.pad{ padding:110px 0; }
+  .divider{ border:none; border-top:1px solid var(--line); }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:64px;
+    align-items:start;
+  }
+  .about-text p{ color:var(--text-muted); font-size:17px; margin:0 0 18px; }
+  .about-text strong{ color:var(--text); font-weight:600; }
+
+  .strengths{ display:flex; flex-direction:column; gap:0; }
+  .strength{
+    padding:20px 0;
+    border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center;
+    gap:20px;
+  }
+  .strength:last-child{ border-bottom:1px solid var(--line); }
+  .strength .num{ font-family:var(--mono); color:var(--sprout-dim); font-size:13px; }
+  .strength .label{ font-family:var(--display); font-size:19px; }
+  .strength .desc{ color:var(--text-faint); font-size:13.5px; text-align:right; max-width:180px; }
+
+  /* ---------- PROCESS (signature) ---------- */
+  .process-rail{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:0;
+    position:relative;
+    margin-top:20px;
+  }
+  .process-rail::before{
+    content:"";
+    position:absolute; left:0; right:0; top:29px;
+    height:1px;
+    background:linear-gradient(90deg, var(--sprout-dim), var(--line) 90%);
+  }
+  .stage{
+    display:flex; flex-direction:column; align-items:flex-start;
+    padding-right:14px;
+    position:relative;
+  }
+  .stage .icon{
+    width:58px; height:58px;
+    border-radius:50%;
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:22px;
+    position:relative; z-index:1;
+    color:var(--sprout);
+  }
+  .stage:nth-child(1) .icon svg{ width:14px; }
+  .stage:nth-child(2) .icon svg{ width:18px; }
+  .stage:nth-child(3) .icon svg{ width:22px; }
+  .stage:nth-child(4) .icon svg{ width:25px; }
+  .stage:nth-child(5) .icon svg{ width:28px; }
+  .stage:nth-child(6) .icon svg{ width:30px; }
+  .stage .stagenum{ font-family:var(--mono); font-size:11px; color:var(--text-faint); margin-bottom:6px; }
+  .stage .stagename{ font-family:var(--display); font-size:16.5px; color:var(--text); margin-bottom:8px; }
+  .stage .stagedesc{ font-size:13px; color:var(--text-faint); line-height:1.55; }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:64px;
+  }
+  .bar-row{ margin-bottom:22px; }
+  .bar-row .bar-top{
+    display:flex; justify-content:space-between;
+    font-family:var(--mono); font-size:12.5px; color:var(--text-muted);
+    margin-bottom:9px;
+  }
+  .bar-track{
+    height:6px; border-radius:4px; background:var(--bg-panel-2);
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;
+    border-radius:4px;
+    background:linear-gradient(90deg, var(--sprout-dim), var(--sprout));
+    width:0%;
+    transition:width 1.1s cubic-bezier(.2,.8,.2,1);
+  }
+
+  .side-col h3{ font-family:var(--mono); font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:var(--text-faint); margin-bottom:20px; }
+  .chip-group{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:40px; }
+  .chip{
+    font-family:var(--mono); font-size:12.5px;
+    padding:9px 14px; border-radius:7px;
+    background:var(--bg-panel); border:1px solid var(--line);
+    color:var(--text-muted);
+    display:flex; align-items:center; gap:8px;
+    transition:border-color .25s ease, color .25s ease;
+  }
+  .chip:hover{ border-color:var(--sprout-dim); color:var(--text); }
+  .chip .dot{ width:5px; height:5px; border-radius:50%; background:var(--sprout); }
+
+  /* ---------- TIMELINE / JOURNEY ---------- */
+  .timeline{ position:relative; padding-left:32px; }
+  .timeline::before{
+    content:""; position:absolute; left:5px; top:6px; bottom:6px; width:1px;
+    background:var(--line);
+  }
+  .tl-item{ position:relative; padding-bottom:52px; }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{
+    content:""; position:absolute; left:-32px; top:4px;
+    width:11px; height:11px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--sprout);
+  }
+  .tl-date{ font-family:var(--mono); font-size:12.5px; color:var(--gold); margin-bottom:8px; letter-spacing:.03em; }
+  .tl-role{ font-family:var(--display); font-size:22px; color:var(--text); margin-bottom:4px; }
+  .tl-org{ font-family:var(--body); font-size:14.5px; color:var(--text-muted); margin-bottom:14px; }
+  .tl-desc{ color:var(--text-faint); font-size:14.5px; max-width:560px; }
+  .tl-desc ul{ margin-top:10px; }
+  .tl-desc li{ position:relative; padding-left:18px; margin-bottom:8px; }
+  .tl-desc li::before{ content:"—"; position:absolute; left:0; color:var(--sprout-dim); }
+
+  /* ---------- PROJECTS ---------- */
+  .project-card{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:48px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+    align-items:center;
+    overflow:hidden;
+    position:relative;
+  }
+  .project-visual{
+    aspect-ratio:4/3;
+    border-radius:12px;
+    background:
+      radial-gradient(circle at 25% 20%, rgba(155,194,63,0.18), transparent 55%),
+      repeating-linear-gradient(115deg, var(--bg-panel-2) 0 2px, transparent 2px 26px);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .project-visual svg{ width:62%; }
+
+  .project-tag{ font-family:var(--mono); font-size:12px; color:var(--sprout); text-transform:uppercase; letter-spacing:.1em; margin-bottom:14px; }
+  .project-title{ font-family:var(--display); font-size:30px; margin-bottom:14px; }
+  .project-role{ font-family:var(--mono); font-size:12.5px; color:var(--text-faint); margin-bottom:20px; }
+  .project-desc{ color:var(--text-muted); font-size:15px; margin-bottom:22px; }
+  .project-desc li{ position:relative; padding-left:18px; margin-bottom:10px; }
+  .project-desc li::before{ content:"→"; position:absolute; left:0; color:var(--sprout); }
+  .tech-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px; }
+  .tech-tag{
+    font-family:var(--mono); font-size:11.5px;
+    padding:6px 11px; border-radius:6px;
+    background:var(--bg-panel-2); color:var(--text-muted);
+    border:1px solid var(--line);
+  }
+  .project-links{ display:flex; gap:24px; }
+  .project-links a{
+    font-family:var(--mono); font-size:13px; color:var(--text);
+    border-bottom:1px solid var(--sprout-dim);
+    padding-bottom:2px;
+    display:inline-flex; align-items:center; gap:6px;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .project-links a:hover{ color:var(--sprout); border-color:var(--sprout); }
+
+  /* ---------- EDUCATION ---------- */
+  .edu-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .edu-card{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:32px;
+    background:var(--bg-panel);
+  }
+  .edu-year{ font-family:var(--mono); font-size:12.5px; color:var(--gold); margin-bottom:14px; }
+  .edu-degree{ font-family:var(--display); font-size:20px; margin-bottom:8px; }
+  .edu-school{ color:var(--text-muted); font-size:14.5px; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px;
+  }
+  .contact-list{ display:flex; flex-direction:column; gap:0; }
+  .contact-item{
+    display:flex; align-items:center; gap:16px;
+    padding:20px 0; border-top:1px solid var(--line);
+  }
+  .contact-item:last-child{ border-bottom:1px solid var(--line); }
+  .contact-item .ico{
+    width:40px; height:40px; border-radius:9px;
+    background:var(--bg-panel); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--sprout); flex-shrink:0;
+  }
+  .contact-item .info .k{ font-family:var(--mono); font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.08em; margin-bottom:3px; }
+  .contact-item .info .v{ font-size:15.5px; color:var(--text); }
+  .contact-item .info .v:hover{ color:var(--sprout); }
+
+  form.contact-form{ display:flex; flex-direction:column; gap:20px; }
+  .field{ display:flex; flex-direction:column; gap:8px; }
+  .field label{ font-family:var(--mono); font-size:12px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.08em; }
+  .field input, .field textarea{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:14px 16px;
+    color:var(--text);
+    font-family:var(--body);
+    font-size:14.5px;
+    resize:vertical;
+    transition:border-color .25s ease;
+  }
+  .field input:focus, .field textarea:focus{ outline:none; border-color:var(--sprout-dim); }
+  .field input::placeholder, .field textarea::placeholder{ color:var(--text-faint); }
+  .form-note{ font-family:var(--mono); font-size:11.5px; color:var(--text-faint); margin-top:-6px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:40px 0;
+  }
+  .footer-row{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+  }
+  .footer-row p{ font-family:var(--mono); font-size:12.5px; color:var(--text-faint); margin:0; }
+  .footer-socials{ display:flex; gap:20px; }
+  .footer-socials a{ font-family:var(--mono); font-size:12.5px; color:var(--text-muted); transition:color .25s ease; }
+  .footer-socials a:hover{ color:var(--sprout); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px){
+    .navlinks{
+      position:fixed; top:74px; left:0; right:0;
+      background:var(--bg-panel);
+      border-bottom:1px solid var(--line);
+      flex-direction:column; gap:0;
+      max-height:0; overflow:hidden;
+      transition:max-height .35s ease;
+    }
+    .navlinks.open{ max-height:400px; }
+    .navlinks a{ padding:16px 32px; width:100%; }
+    .navlinks a::after{ display:none; }
+    .navtoggle{ display:flex; }
+
+    .about-grid, .skills-grid, .contact-grid{ grid-template-columns:1fr; }
+    .process-rail{ grid-template-columns:repeat(2,1fr); row-gap:40px; }
+    .process-rail::before{ display:none; }
+    .project-card{ grid-template-columns:1fr; padding:28px; }
+    .edu-grid{ grid-template-columns:1fr; }
+    .strength .desc{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="wrap">
+    <div class="brand"><span class="mark">B</span>Balamurugan</div>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#journey">Journey</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="navtoggle" id="navtoggle" aria-label="Toggle menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4H16M2 9H16M2 14H16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </nav>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <svg class="furrows" viewBox="0 0 1200 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="furrowFade" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#9bc23f" stop-opacity="0.16"/>
+        <stop offset="1" stop-color="#9bc23f" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <g stroke="url(#furrowFade)" stroke-width="1.4">
+      <path d="M-100 640 C 300 560, 900 560, 1300 640"/>
+      <path d="M-100 590 C 300 510, 900 510, 1300 590"/>
+      <path d="M-100 540 C 300 460, 900 460, 1300 540"/>
+      <path d="M-100 490 C 300 410, 900 410, 1300 490"/>
+      <path d="M-100 440 C 300 360, 900 360, 1300 440"/>
+    </g>
+  </svg>
+
+  <div class="wrap">
+    <div class="hero-eyebrow">Chennai, India · Available for UX roles &amp; freelance</div>
+    <h1>Balamurugan<span>UI / UX Designer</span></h1>
+    <div class="hero-role"><span class="dot"></span>Research → Architecture → Interface</div>
+    <p class="hero-tagline">I spend as much time with users as with pixels — mapping how people actually work, then building the interface that fits. Certified in UI/UX Design, grounded in the fields I design for.</p>
+    <div class="cta-row">
+      <a href="#work" class="btn btn-primary">View Case Study</a>
+      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+    </div>
+    <div class="scroll-cue"><span class="line"></span>Scroll</div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="pad" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="eyebrow">About</div>
+        <div class="about-text">
+          <p><strong>I design interfaces by starting with the people who'll use them, not the screen.</strong> My process runs the full length of a UX practice — user research, personas, journey mapping, information architecture, wireframing — through to polished, high-fidelity prototypes in Figma.</p>
+          <p>My flagship project, an AI-powered farming app, asked me to design for smallholder farmers making high-stakes decisions with low digital literacy. That constraint shaped everything: research that listened before it assumed, and interfaces built for clarity over cleverness.</p>
+          <p>Certified in UI/UX Design through Login360 Institute, Chennai — currently building out a portfolio of mobile and web case studies.</p>
+        </div>
+      </div>
+      <div class="strengths reveal">
+        <div class="strength">
+          <div class="num">01</div>
+          <div class="label">Research-first</div>
+          <div class="desc">Quant &amp; qual methods before a single wireframe</div>
+        </div>
+        <div class="strength">
+          <div class="num">02</div>
+          <div class="label">Systems thinker</div>
+          <div class="desc">Information architecture that scales with the product</div>
+        </div>
+        <div class="strength">
+          <div class="num">03</div>
+          <div class="label">Figma craft</div>
+          <div class="desc">Low-fi to high-fi without losing intent</div>
+        </div>
+        <div class="strength">
+          <div class="num">04</div>
+          <div class="label">Validated, not assumed</div>
+          <div class="desc">Usability testing built into every stage</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider wrap">
+
+<!-- ===================== PROCESS (signature) ===================== -->
+<section class="pad" id="process">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">How I work</div>
+      <h2>One process, grown in stages</h2>
+      <p>Every project moves through the same six stages — each one building on what the last one uncovered, like a season's planting.</p>
+    </div>
+
+    <div class="process-rail">
+      <div class="stage reveal">
+        <div class="stagenum">01</div>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="17" rx="3" ry="4" fill="currentColor"/></svg></div>
+        <div class="stagename">Research</div>
+        <div class="stagedesc">Quantitative &amp; qualitative studies with real users.</div>
+      </div>
+      <div class="stage reveal">
+        <div class="stagenum">02</div>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20V10M12 10C12 6 9 5 7 5c0 3 1.5 5 5 5Z" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></div>
+        <div class="stagename">Empathize</div>
+        <div class="stagedesc">Personas &amp; empathy maps built from what people said.</div>
+      </div>
+      <div class="stage reveal">
+        <div class="stagenum">03</div>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20V8M12 8C12 4 8 3 6 3c0 4 2 6 6 6ZM12 8c0-4 4-5 6-5 0 4-2 6-6 6Z" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <div class="stagename">Architecture</div>
+        <div class="stagedesc">Information structures &amp; flows that hold up at scale.</div>
+      </div>
+      <div class="stage reveal">
+        <div class="stagenum">04</div>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21V6M12 6C12 2 7 1 4 1c0 5 2.5 7 8 7ZM12 6c0-4 5-5 8-5 0 5-2.5 7-8 7Z" stroke="currentColor" stroke-width="1.6"/><path d="M12 14C12 11 9 10 7 10c0 3 1.5 5 5 5Z" stroke="currentColor" stroke-width="1.4"/></svg></div>
+        <div class="stagename">Wireframe</div>
+        <div class="stagedesc">Low-fidelity structure, tested for logic before looks.</div>
+      </div>
+      <div class="stage reveal">
+        <div class="stagenum">05</div>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22V5M12 5C12 1 6 0 3 0c0 5 3 8 9 8ZM12 5c0-4 6-5 9-5 0 5-3 8-9 8Z" stroke="currentColor" stroke-width="1.6"/><path d="M12 13c0-3-3-4-6-4 0 3 2 5 6 5Z" stroke="currentColor" stroke-width="1.4"/><path d="M12 13c0-3 3-4 6-4 0 3-2 5-6 5Z" stroke="currentColor" stroke-width="1.4"/></svg></div>
+        <div class="stagename">Prototype</div>
+        <div class="stagedesc">High-fidelity Figma screens, ready to click through.</div>
+      </div>
+      <div class="stage reveal">
+        <div class="stagenum">06</div>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20c2-9 6-14 8-16 2 2 6 7 8 16-2-3-6-4-8-4s-6 1-8 4Z" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <div class="stagename">Usability Test</div>
+        <div class="stagedesc">Real sessions, real friction found — then fixed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider wrap">
+
+<!-- ===================== SKILLS ===================== -->
+<section class="pad" id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Skills</div>
+      <h2>Craft &amp; toolkit</h2>
+    </div>
+
+    <div class="skills-grid">
+      <div class="reveal">
+        <h3 style="font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-faint);margin-bottom:24px;">Design Practice</h3>
+        <div class="bars" id="bars">
+          <div class="bar-row" data-level="95">
+            <div class="bar-top"><span>User Research</span><span>Advanced</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row" data-level="90">
+            <div class="bar-top"><span>Wireframing</span><span>Advanced</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row" data-level="88">
+            <div class="bar-top"><span>Prototyping</span><span>Advanced</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row" data-level="85">
+            <div class="bar-top"><span>Information Architecture</span><span>Advanced</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row" data-level="82">
+            <div class="bar-top"><span>Usability Testing</span><span>Proficient</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row" data-level="80">
+            <div class="bar-top"><span>Responsive &amp; Visual Design</span><span>Proficient</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+          <div class="bar-row" data-level="75">
+            <div class="bar-top"><span>Design Systems</span><span>Proficient</span></div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-col">
+        <div class="reveal">
+          <h3>Tools</h3>
+          <div class="chip-group">
+            <span class="chip"><span class="dot"></span>Figma</span>
+            <span class="chip"><span class="dot"></span>FigJam</span>
+            <span class="chip"><span class="dot"></span>Figma Make</span>
+            <span class="chip"><span class="dot"></span>Balsamiq</span>
+            <span class="chip"><span class="dot"></span>Adobe Illustrator</span>
+            <span class="chip"><span class="dot"></span>Adobe Photoshop</span>
+            <span class="chip"><span class="dot"></span>Adobe XD</span>
+          </div>
+        </div>
+        <div class="reveal">
+          <h3>Soft Skills</h3>
+          <div class="chip-group">
+            <span class="chip"><span class="dot"></span>Design Thinking</span>
+            <span class="chip"><span class="dot"></span>Stakeholder Communication</span>
+            <span class="chip"><span class="dot"></span>Competitive Analysis</span>
+            <span class="chip"><span class="dot"></span>Interaction Design</span>
+          </div>
+        </div>
+        <div class="reveal">
+          <h3>Languages</h3>
+          <div class="chip-group">
+            <span class="chip"><span class="dot"></span>Tamil</span>
+            <span class="chip"><span class="dot"></span>English</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider wrap">
+
+<!-- ===================== JOURNEY / EXPERIENCE ===================== -->
+<section class="pad" id="journey">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Journey</div>
+      <h2>Training &amp; hands-on practice</h2>
+      <p>Certification and real project work, side by side — theory tested against an actual product from day one.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-date">Dec 2025 — Jun 2026</div>
+        <div class="tl-role">UI/UX Design Certification</div>
+        <div class="tl-org">Login360 Institute, Chennai</div>
+        <div class="tl-desc">
+          <ul>
+            <li>Full-stack UX curriculum: research, IA, wireframing, prototyping, usability testing.</li>
+            <li>Building a professional portfolio of mobile &amp; web projects, including a full case study.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">2025 — 2026</div>
+        <div class="tl-role">Lead UX Designer</div>
+        <div class="tl-org">Uzhavan Smart Assist — AI-powered smart farming app</div>
+        <div class="tl-desc">
+          <ul>
+            <li>Owned end-to-end UX for an app helping smallholder farmers make data-driven decisions.</li>
+            <li>Ran research, competitive analysis, IA, wireframing and hi-fi prototyping solo.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider wrap">
+
+<!-- ===================== WORK / PROJECTS ===================== -->
+<section class="pad" id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Featured Work</div>
+      <h2>Uzhavan Smart Assist</h2>
+      <p>An end-to-end case study in designing for users the tech industry usually designs around, not for.</p>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-visual">
+        <svg viewBox="0 0 200 200" fill="none">
+          <rect x="30" y="20" width="140" height="160" rx="14" stroke="#9bc23f" stroke-width="2" opacity="0.7"/>
+          <rect x="46" y="40" width="108" height="14" rx="4" fill="#9bc23f" opacity="0.25"/>
+          <rect x="46" y="64" width="70" height="10" rx="3" fill="#e6b64d" opacity="0.5"/>
+          <rect x="46" y="90" width="108" height="46" rx="8" stroke="#9bc23f" stroke-width="1.5" opacity="0.5"/>
+          <path d="M60 122 L74 104 L88 116 L106 92 L124 108" stroke="#9bc23f" stroke-width="2" fill="none"/>
+          <rect x="46" y="148" width="50" height="16" rx="6" fill="#9bc23f" opacity="0.35"/>
+          <rect x="104" y="148" width="50" height="16" rx="6" stroke="#e6b64d" stroke-width="1.5" opacity="0.6"/>
+        </svg>
+      </div>
+      <div>
+        <div class="project-tag">AI-powered smart farming app</div>
+        <div class="project-title">Designing decisions farmers can trust</div>
+        <div class="project-role">Lead UX Designer · 2025–2026</div>
+        <ul class="project-desc">
+          <li>Designed end-to-end UX for an AI farming app helping smallholder farmers make data-driven decisions.</li>
+          <li>Ran quantitative &amp; qualitative research, producing personas, empathy maps and journey maps.</li>
+          <li>Benchmarked Kisan Suvidha, AgriApp and AgroStar to surface product gaps and opportunities.</li>
+          <li>Built the information architecture and user flows, validated through usability testing.</li>
+          <li>Took the product from low-fidelity wireframes to polished, high-fidelity Figma screens.</li>
+        </ul>
+        <div class="tech-tags">
+          <span class="tech-tag">User Research</span>
+          <span class="tech-tag">Competitive Analysis</span>
+          <span class="tech-tag">Personas</span>
+          <span class="tech-tag">Information Architecture</span>
+          <span class="tech-tag">User Flows</span>
+          <span class="tech-tag">Wireframing</span>
+          <span class="tech-tag">Prototyping</span>
+          <span class="tech-tag">Usability Testing</span>
+          <span class="tech-tag">Figma</span>
+        </div>
+        <div class="project-links">
+          <a href="https://www.behance.net/Balamurugan" target="_blank" rel="noopener">View Case Study on Behance →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider wrap">
+
+<!-- ===================== EDUCATION ===================== -->
+<section class="pad" id="education">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Education</div>
+      <h2>Academic background</h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-year">2025</div>
+        <div class="edu-degree">B.A. Tourism &amp; Travel Management</div>
+        <div class="edu-school">H.H. The Rajahs College</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-year">2022</div>
+        <div class="edu-degree">Higher Secondary Certificate (HSC)</div>
+        <div class="edu-school">Government Higher Secondary School</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider wrap">
+
+<!-- ===================== CONTACT ===================== -->
+<section class="pad" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Contact</div>
+      <h2>Let's build something people actually want to use</h2>
+      <p>Open to UI/UX roles, freelance projects, and portfolio collaborations in Chennai and remote.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-list reveal">
+        <div class="contact-item">
+          <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="1.6"/><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/></svg></div>
+          <div class="info"><div class="k">Email</div><a class="v" href="mailto:davibala2908@gmail.com">davibala2908@gmail.com</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 3a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.5c1 .4 2 .6 3 .7a2 2 0 0 1 1.7 2Z" stroke="currentColor" stroke-width="1.6"/></svg></div>
+          <div class="info"><div class="k">Phone</div><a class="v" href="tel:+919080661342">+91 90806 61342</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="9" width="4" height="12" fill="currentColor"/><circle cx="4" cy="4" r="2" fill="currentColor"/><path d="M10 9h4v2c1-1.5 2.5-2.3 4.5-2.3 3.5 0 5.5 2.3 5.5 6.4V21h-4v-5.5c0-1.8-.6-3-2.3-3-1.3 0-2 .9-2.3 1.7-.1.3-.1.7-.1 1.1V21h-4V9Z" fill="currentColor"/></svg></div>
+          <div class="info"><div class="k">LinkedIn</div><a class="v" href="https://linkedin.com/in/bala-murugan" target="_blank" rel="noopener">linkedin.com/in/bala-murugan</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="9" height="6" rx="1" stroke="currentColor" stroke-width="1.6"/><path d="M2 15h9M13.5 8h6c1.7 0 2.5 1 2.5 2.2 0 1-.6 1.7-1.5 2 1 .3 1.8 1 1.8 2.3 0 1.5-1.1 2.5-2.8 2.5h-6V8Z" stroke="currentColor" stroke-width="1.6"/></svg></div>
+          <div class="info"><div class="k">Behance</div><a class="v" href="https://www.behance.net/Balamurugan" target="_blank" rel="noopener">behance.net/Balamurugan</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-5.4 8-12a8 8 0 1 0-16 0c0 6.6 8 12 8 12Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.6"/></svg></div>
+          <div class="info"><div class="k">Location</div><span class="v">Chennai, India</span></div>
+        </div>
+      </div>
+
+      <form class="contact-form reveal" onsubmit="event.preventDefault(); this.querySelector('.form-success').style.display='block';">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" type="text" placeholder="Your name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send Message</button>
+        <p class="form-note form-success" style="display:none;color:var(--sprout);">Thanks — this is a UI-only demo form, but feel free to email me directly above.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <p>© 2026 Balamurugan. All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="mailto:davibala2908@gmail.com">Email</a>
+      <a href="https://linkedin.com/in/bala-murugan" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.behance.net/Balamurugan" target="_blank" rel="noopener">Behance</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile nav toggle
+  const navtoggle = document.getElementById('navtoggle');
+  const navlinks = document.getElementById('navlinks');
+  navtoggle.addEventListener('click', () => navlinks.classList.toggle('open'));
+  navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navlinks.classList.remove('open')));
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // skill bar fill on view
+  const bars = document.querySelectorAll('.bar-row');
+  const barIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const fill = e.target.querySelector('.bar-fill');
+        fill.style.width = e.target.dataset.level + '%';
+        barIo.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  bars.forEach(b => barIo.observe(b));
+</script>
+
+</body>
+</html>
