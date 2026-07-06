@@ -1,9 +1,9 @@
 {
-  "name": "portfolio",
   "version": 2,
+  "public": true,
   "builds": [
     {
-      "src": "index.html",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "."
@@ -12,8 +12,12 @@
   ],
   "routes": [
     {
+      "src": "/(.*\\..*)",
+      "dest": "/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "index.html"
+      "dest": "/index.html"
     }
   ]
 }
