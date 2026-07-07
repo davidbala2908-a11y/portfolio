@@ -148,6 +148,28 @@
   }
   .hero .wrap{ position:relative; z-index:1; }
 
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:60px;
+    align-items:center;
+  }
+  .hero-photo{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  .hero-photo img{
+    width:min(2000px,100%);
+    aspect-ratio:1 / 1;
+    object-fit:cover;
+    border-radius:50%;
+    border:8px solid rgba(255,255,255,0.18);
+    box-shadow:0 34px 80px rgba(0,0,0,0.26);
+    background:radial-gradient(circle at top left, rgba(155,194,63,0.08), transparent 45%);
+    transform: translateY(-152px);
+  }
+
   .hero-eyebrow{
     font-family:var(--mono);
     font-size:13px; letter-spacing:.14em; text-transform:uppercase;
@@ -519,15 +541,22 @@
   </svg>
 
   <div class="wrap">
-    <div class="hero-eyebrow">Chennai, India · Available for UX roles &amp; freelance</div>
-    <h1>Balamurugan<span>UI / UX Designer</span></h1>
-    <div class="hero-role"><span class="dot"></span>Research → Architecture → Interface</div>
-    <p class="hero-tagline">I spend as much time with users as with pixels — mapping how people actually work, then building the interface that fits. Certified in UI/UX Design, grounded in the fields I design for.</p>
-    <div class="cta-row">
-      <a href="#work" class="btn btn-primary">View Case Study</a>
-      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">Chennai, India · Available for UX roles &amp; freelance</div>
+        <h1>Balamurugan<span>UI / UX Designer</span></h1>
+        <div class="hero-role"><span class="dot"></span>Research → Architecture → Interface</div>
+        <p class="hero-tagline">I spend as much time with users as with pixels — mapping how people actually work, then building the interface that fits. Certified in UI/UX Design, grounded in the fields I design for.</p>
+        <div class="cta-row">
+          <a href="#work" class="btn btn-primary">View Case Study</a>
+          <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        </div>
+        <div class="scroll-cue"><span class="line"></span>Scroll</div>
+      </div>
+      <div class="hero-photo reveal">
+        <img src="img/bala 1.png" alt="Balamurugan portrait">
+      </div>
     </div>
-    <div class="scroll-cue"><span class="line"></span>Scroll</div>
   </div>
 </section>
 
@@ -784,7 +813,7 @@
           <span class="tech-tag">Figma</span>
         </div>
         <div class="project-links">
-          <a href="https://www.behance.net/Balamurugan" target="_blank" rel="noopener">View Case Study on Behance →</a>
+          <a href="https://www.behance.net/gallery/251769963/Uzhavan-Smart-Assist/modules/1461237951" target="_blank" rel="noopener">View Case Study on Behance →</a>
         </div>
       </div>
     </div>
